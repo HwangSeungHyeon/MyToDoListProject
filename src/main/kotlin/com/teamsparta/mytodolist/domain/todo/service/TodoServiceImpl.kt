@@ -5,7 +5,7 @@ import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 
 
 //todoService 인터페이스 파일을 오버라이딩해서 구현
-class todoServiceImpl : todoService{
+class TodoServiceImpl : TodoService{
     
     override fun getAllTodoList(): List<TodoResponseDto> {
         // TODO: DB에서 모든 할 일 목록을 조회하여 TodoResponseDto로 변환 후 리스트 형태로 반환
