@@ -3,14 +3,13 @@ package com.teamsparta.mytodolist.domain.todo.controller
 import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoRequestDto
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoRequestDto
-import com.teamsparta.mytodolist.domain.todo.service.todoService
-import com.teamsparta.mytodolist.domain.todo.service.todoServiceImpl
+import com.teamsparta.mytodolist.domain.todo.service.TodoService
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/todos") // base URI 경로 하위에 해당하는 건 전부 TodoController가 담당하게 됨
 @RestController //TodoController를 Bean으로 등록
 class TodoController(
-    private val todoService: todoService //생성자 주입
+    private val todoService: TodoService //생성자 주입
 ) {
     @GetMapping() //GET 메소드 핸들링, /todos에 접근한다
     //할 일 목록 리스트를 가져오는 메소드
