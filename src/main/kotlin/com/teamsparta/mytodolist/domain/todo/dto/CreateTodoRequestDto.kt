@@ -2,7 +2,9 @@ package com.teamsparta.mytodolist.domain.todo.dto
 
 import java.util.Date
 
-// 할 일 카드를 작성했을 때 사용하는 DTO
+//DTO: 각 Layer 사이의 데이터를 전달하는데 사용
+//응답(Request)과 요청(Response) 또한 DTO로 표현 가능
+//할 일 카드 생성 요청(request)을 전달하는 클래스
 data class CreateTodoRequestDto(
     val title: String, //할 일 제목을 나타내는 변수
     val description: String, //할 일 내용을 나타내는 변수
