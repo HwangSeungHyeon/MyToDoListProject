@@ -8,4 +8,4 @@
 ![Document](https://github.com/HwangSeungHyeon/MyToDoListProject/blob/develop/img/To%20Do%20List%20%EB%AA%85%EC%84%B8%EC%84%9C.png)
 
 # ER Diagram
-![ERD](https://github.com/HwangSeungHyeon/MyToDoListProject/blob/develop/img/To%20Do%20ERD.png)
+![ERD](https://github.com/HwangSeungHyeon/MyToDoListProject/blob/develop/img/To%20Do%20List%20ERD.png)
