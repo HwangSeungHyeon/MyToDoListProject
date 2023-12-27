@@ -1,8 +1,8 @@
 package com.teamsparta.mytodolist.domain.todo.controller
 
-import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoResponseDto
+import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoRequestDto
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
-import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoResponseDto
+import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoRequestDto
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/todos") // base URI 경로 하위에 해당하는 건 전부 TodoController가 담당하게 됨
@@ -25,14 +25,14 @@ class TodoController {
     @PostMapping() //POST 메소드 핸들링, /todos에 접근한다
     //할 일 카드를 만드는 메소드
     //CreateTodoResponse DTO를 argument로 받아서 TodoResponseDto를 반환
-    fun createTodo(@RequestBody createTodoResponse: CreateTodoResponseDto): TodoResponseDto{
+    fun createTodo(@RequestBody createTodoRequest: CreateTodoRequestDto): TodoResponseDto{
         TODO("not implemented") //아직 기능 구현 안 함
     }
 
     @PutMapping("/{todoId}") //GET 메소드 핸들링, /todos/todoId에 접근한다
     //선택한 할 일 카드를 수정하는 메소드
     //todoId와 UpdateTodoResponsef DTO를 argument로 받아서 TodoResponseDto를 반환
-    fun updateTodo(@PathVariable todoId: Long, @RequestBody updateTodoResponse: UpdateTodoResponseDto): TodoResponseDto{
+    fun updateTodo(@PathVariable todoId: Long, @RequestBody updateTodoRequest: UpdateTodoRequestDto): TodoResponseDto{
         TODO("not implemented") //아직 기능 구현 안 함
     }
 

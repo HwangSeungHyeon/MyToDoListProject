@@ -1,6 +1,6 @@
 package com.teamsparta.mytodolist.domain.todo.service
 
-import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoResponseDto
+import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoRequestDto
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 
 interface todoService {
@@ -8,7 +8,7 @@ interface todoService {
 
     fun getTodoById(id: Long): TodoResponseDto
 
-    fun createTodo(requestDto: CreateTodoResponseDto): TodoResponseDto
+    fun createTodo(requestDto: CreateTodoRequestDto): TodoResponseDto
 
     fun updateTodo(id: Long,): TodoResponseDto
 
