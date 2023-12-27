@@ -3,10 +3,12 @@ package com.teamsparta.mytodolist.domain.todo.service
 import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoRequestDto
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoRequestDto
+import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 
 //todoService 인터페이스 파일을 오버라이딩해서 구현
+@Service //TodoServiceImpl를 bean으로 설정
 class TodoServiceImpl : TodoService{
 
     override fun getAllTodoList(): List<TodoResponseDto> {
