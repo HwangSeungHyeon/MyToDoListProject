@@ -1,5 +1,6 @@
 package com.teamsparta.mytodolist.domain.todo.model
 
+import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 import jakarta.persistence.*
 import java.util.Date
 
@@ -21,4 +22,14 @@ class TodoModel(
     @Id //PK 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY) //DB에서 ID를 자동으로 생성
     var id: Long? = null //DB에서 ID를 만들기 때문에 var 키워드를 사용
+}
+
+fun TodoModel.toResponse(): TodoResponseDto{
+    return TodoResponseDto(
+        id = id!!,
+        title = title,
+        description = description,
+        date = date,
+        name = name
+    )
 }

@@ -1,44 +1,58 @@
 package com.teamsparta.mytodolist.domain.todo.service
 
+import com.teamsparta.mytodolist.domain.exception.ModelNotFoundException
 import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoRequestDto
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoRequestDto
+import com.teamsparta.mytodolist.domain.todo.model.TodoModel
+import com.teamsparta.mytodolist.domain.todo.model.toResponse
+import com.teamsparta.mytodolist.domain.todo.repository.TodoRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 
 //todoService 인터페이스 파일을 오버라이딩해서 구현
 @Service //TodoServiceImpl를 bean으로 설정
-class TodoServiceImpl : TodoService{
+class TodoServiceImpl(
+    private val todoRepository: TodoRepository //상속성 주입
+) : TodoService{
 
     override fun getAllTodoList(): List<TodoResponseDto> {
-        // TODO: DB에서 모든 할 일 목록을 조회하여 TodoResponseDto로 변환 후 리스트 형태로 반환
-        TODO("Not yet implemented")
+        return todoRepository.findAll().map { it.toResponse() }
     }
 
     override fun getTodoById(id: Long): TodoResponseDto {
-        // TODO: 만약 id에 해당하는 할 일이 없다면 throw ModelNotFoundException
-        // TODO: DB에서 ID 기반으로 할 일을 조회하여 TodoResponseDto로 변환 후 반환
-        TODO("Not yet implemented")
+        val todo = todoRepository.findByIdOrNull(id) ?: throw ModelNotFoundException("Todo", id)
+        return todo.toResponse()
     }
 
     @Transactional
     override fun createTodo(requestDto: CreateTodoRequestDto): TodoResponseDto {
-        // TODO: CreateTodoRequestDto를 TodoResponseDto로 변환 후 반환
-        TODO("Not yet implemented")
+        return todoRepository.save(
+            TodoModel(
+                title = requestDto.title,
+                description = requestDto.description,
+                date = requestDto.date,
+                name = requestDto.name
+            )
+        ).toResponse()
     }
 
     @Transactional
     override fun updateTodo(id: Long, requestDto: UpdateTodoRequestDto): TodoResponseDto {
-        // TODO: 만약 id에 해당하는 할 일이 없다면 throw ModelNotFoundException
-        // TODO: DB에서 ID 기반으로 할 일을 조회하여 TodoResponseDto로 변환 후 반환     
-        TODO("Not yet implemented")
+        val todo = todoRepository.findByIdOrNull(id) ?: throw ModelNotFoundException("Todo", id)
+
+        todo.name = requestDto.name
+        todo.title = requestDto.title
+        todo.description = requestDto.description
+
+        return todoRepository.save(todo).toResponse()
     }
 
     @Transactional
     override fun deleteTodo(id: Long){
-        // TODO: 만약 id에 해당하는 할 일이 없다면 throw ModelNotFoundException
-        // TODO: DB에서 ID에 해당하는 할 일을 삭제
-        TODO("Not yet implemented")
+        val todo = todoRepository.findByIdOrNull(id) ?: throw ModelNotFoundException("Todo", id)
+        todoRepository.delete(todo)
     }
 }
