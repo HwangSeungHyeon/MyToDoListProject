@@ -10,7 +10,7 @@ import com.teamsparta.mytodolist.domain.todo.repository.TodoRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
+import java.time.LocalDateTime
 
 
 /*
@@ -28,7 +28,7 @@ class TodoServiceImpl(
     //모든 할 일 목록을 가져오는 메소드
     //Entity로 DB에서 값을 가져와서 응답(Response) DTO 리스트로 바꾸고, Controller로 전달
     override fun getAllTodoList(): List<TodoResponseDto> {
-        return todoRepository.findAll().map { it.toResponse() }
+        return todoRepository.findAllByOrderByDateDesc().map { it.toResponse() }
     }
 
     //id에 해당하는 할 일 카드를 가져오는 메소드
@@ -50,7 +50,7 @@ class TodoServiceImpl(
             TodoModel(
                 title = requestDto.title,
                 description = requestDto.description,
-                date = requestDto.date,
+                date = LocalDateTime.now(), //date는 입력받은 값을 넣는 게 아니라, timezone이 설정된 현재 시간을 넣음
                 name = requestDto.name
             )
         ).toResponse()

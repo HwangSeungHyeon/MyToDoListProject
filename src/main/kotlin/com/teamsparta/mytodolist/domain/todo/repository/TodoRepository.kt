@@ -2,6 +2,7 @@ package com.teamsparta.mytodolist.domain.todo.repository
 
 import com.teamsparta.mytodolist.domain.todo.model.TodoModel
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
 /*
 * Spring의 Web Layer의 일부
@@ -10,5 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 * Java 및 kotlin 객체를 사용해서 DB에 대해 CRUD를 쉽게 할 수 있도록 하는 JPA를 사용해서 DB와 통신
 */
 interface TodoRepository: JpaRepository<TodoModel, Long> {
-    
+    fun findAllByOrderByDateDesc(): List<TodoModel>
 }

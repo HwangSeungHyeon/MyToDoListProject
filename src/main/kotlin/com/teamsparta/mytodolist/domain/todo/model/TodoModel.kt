@@ -2,7 +2,7 @@ package com.teamsparta.mytodolist.domain.todo.model
 
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 import jakarta.persistence.*
-import java.util.Date
+import java.time.LocalDateTime
 
 //Domain Model: Domain Service, Entity, VO(Value Object)를 포함하는 개념
 
@@ -16,7 +16,7 @@ class TodoModel( //데이터베이스에서 데이터를 가져올 때 사용하
     var description: String, //내용은 수정 가능, null 허용 X
 
     @Column(name="date") //매핑할 테이블의 컬럼을 정의
-    val date: Date, //작성 날짜는 수정 불가능
+    val date: LocalDateTime, //작성 날짜는 수정 불가능
 
     @Column(name = "name") //매핑할 테이블의 컬럼을 정의
     var name: String //작성자 이름은 수정 가능, null 허용 X
