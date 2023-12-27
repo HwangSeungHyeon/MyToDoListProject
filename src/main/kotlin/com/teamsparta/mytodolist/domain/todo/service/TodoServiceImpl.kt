@@ -3,6 +3,7 @@ package com.teamsparta.mytodolist.domain.todo.service
 import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoRequestDto
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoRequestDto
+import org.springframework.transaction.annotation.Transactional
 
 
 //todoService 인터페이스 파일을 오버라이딩해서 구현
@@ -19,17 +20,20 @@ class TodoServiceImpl : TodoService{
         TODO("Not yet implemented")
     }
 
+    @Transactional
     override fun createTodo(requestDto: CreateTodoRequestDto): TodoResponseDto {
         // TODO: CreateTodoRequestDto를 TodoResponseDto로 변환 후 반환
         TODO("Not yet implemented")
     }
 
+    @Transactional
     override fun updateTodo(id: Long, requestDto: UpdateTodoRequestDto): TodoResponseDto {
         // TODO: 만약 id에 해당하는 할 일이 없다면 throw ModelNotFoundException
         // TODO: DB에서 ID 기반으로 할 일을 조회하여 TodoResponseDto로 변환 후 반환     
         TODO("Not yet implemented")
     }
 
+    @Transactional
     override fun deleteTodo(id: Long){
         // TODO: 만약 id에 해당하는 할 일이 없다면 throw ModelNotFoundException
         // TODO: DB에서 ID에 해당하는 할 일을 삭제
