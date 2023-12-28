@@ -1,9 +1,6 @@
 package com.teamsparta.mytodolist.domain.todo.service
 
-import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoRequestDto
-import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
-import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoRequestDto
-import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoStatusRequestDto
+import com.teamsparta.mytodolist.domain.todo.dto.*
 
 /*
 * Spring의 Layer의 일부
@@ -18,7 +15,7 @@ interface TodoService {
     
     //id에 해당하는 할 일 카드를 가져오는 메소드
     //Entity로 DB에서 값을 가져와서 응답(Response) DTO로 바꾸고, Controller로 전달
-    fun getTodoById(id: Long): TodoResponseDto
+    fun getTodoById(id: Long): TodoResponseWithCommentsDto
 
     /*
     * 할 일 카드를 생성하는 메소드

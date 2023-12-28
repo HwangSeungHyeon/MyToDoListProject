@@ -1,12 +1,10 @@
 package com.teamsparta.mytodolist.domain.todo.service
 
 import com.teamsparta.mytodolist.domain.exception.ModelNotFoundException
-import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoRequestDto
-import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
-import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoRequestDto
-import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoStatusRequestDto
+import com.teamsparta.mytodolist.domain.todo.dto.*
 import com.teamsparta.mytodolist.domain.todo.model.TodoModel
 import com.teamsparta.mytodolist.domain.todo.model.toResponse
+import com.teamsparta.mytodolist.domain.todo.model.toResponseWithComments
 import com.teamsparta.mytodolist.domain.todo.repository.TodoRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -33,9 +31,9 @@ class TodoServiceImpl(
 
     //id에 해당하는 할 일 카드를 가져오는 메소드
     //Entity로 DB에서 값을 가져와서 응답(Response) DTO로 바꾸고, Controller로 전달
-    override fun getTodoById(id: Long): TodoResponseDto {
+    override fun getTodoById(id: Long): TodoResponseWithCommentsDto {
         val todo = todoRepository.findByIdOrNull(id) ?: throw ModelNotFoundException("Todo", id)
-        return todo.toResponse()
+        return todo.toResponseWithComments()
     }
 
     /*

@@ -1,9 +1,6 @@
 package com.teamsparta.mytodolist.domain.todo.controller
 
-import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoRequestDto
-import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
-import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoRequestDto
-import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoStatusRequestDto
+import com.teamsparta.mytodolist.domain.todo.dto.*
 import com.teamsparta.mytodolist.domain.todo.service.TodoService
 import org.springframework.web.bind.annotation.*
 
@@ -27,7 +24,7 @@ class TodoController(
     @GetMapping("/{todoId}") //GET 메소드 핸들링, /todos/{todoId}에 접근한다
     //선택한 할 일 카드를 가져오는 메소드
     //todoId를 argument로 받아서 TodoResponseDto를 반환
-    fun getTodo(@PathVariable todoId: Long): TodoResponseDto{
+    fun getTodo(@PathVariable todoId: Long): TodoResponseWithCommentsDto {
         return todoService.getTodoById(todoId)
     }
 

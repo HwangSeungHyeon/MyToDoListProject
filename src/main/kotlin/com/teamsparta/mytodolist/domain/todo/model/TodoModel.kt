@@ -2,6 +2,7 @@ package com.teamsparta.mytodolist.domain.todo.model
 
 import com.teamsparta.mytodolist.domain.comment.model.CommentModel
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
+import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseWithCommentsDto
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -40,6 +41,17 @@ class TodoModel( //데이터베이스에서 데이터를 가져올 때 사용하
 */
 fun TodoModel.toResponse(): TodoResponseDto{
     return TodoResponseDto(
+        id = id!!,
+        title = title,
+        description = description,
+        date = date,
+        name = name,
+        status = status
+    )
+}
+
+fun TodoModel.toResponseWithComments(): TodoResponseWithCommentsDto{
+    return TodoResponseWithCommentsDto(
         id = id!!,
         title = title,
         description = description,
