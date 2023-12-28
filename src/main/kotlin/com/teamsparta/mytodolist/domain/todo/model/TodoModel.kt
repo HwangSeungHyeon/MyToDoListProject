@@ -45,6 +45,7 @@ fun TodoModel.toResponse(): TodoResponseDto{
         description = description,
         date = date,
         name = name,
-        status = status
+        status = status,
+        comments = comments
     )
 }
