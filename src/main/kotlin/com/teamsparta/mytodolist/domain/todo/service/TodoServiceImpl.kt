@@ -50,7 +50,7 @@ class TodoServiceImpl(
             TodoModel(
                 title = requestDto.title,
                 description = requestDto.description,
-                date = LocalDateTime.now(), //date는 입력받은 값을 넣는 게 아니라, timezone이 설정된 현재 시간을 넣음
+                date = LocalDateTime.now(), //date는 입력받지 않고, 그냥 timezone이 설정된 현재 시간을 넣음
                 name = requestDto.name
             )
         ).toResponse()

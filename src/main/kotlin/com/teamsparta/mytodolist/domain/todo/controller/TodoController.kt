@@ -33,18 +33,18 @@ class TodoController(
     @PostMapping() //POST 메소드 핸들링, /todos에 접근한다
     //할 일 카드를 만드는 메소드
     fun createTodo(@RequestBody createTodoRequest: CreateTodoRequestDto): TodoResponseDto{
-        //CreateTodoResponse DTO를 argument로 받아서 TodoResponseDto를 반환
+        //CreateTodoRequest DTO를 argument로 받아서 TodoResponseDto를 반환
         return todoService.createTodo(createTodoRequest)
     }
 
-    @PutMapping("/{todoId}") //GET 메소드 핸들링, /todos/todoId에 접근한다
+    @PutMapping("/{todoId}") //PUT 메소드 핸들링, /todos/todoId에 접근한다
     //선택한 할 일 카드를 수정하는 메소드
-    //todoId와 UpdateTodoResponsef DTO를 argument로 받아서 TodoResponseDto를 반환
+    //todoId와 UpdateTodoRequest DTO를 argument로 받아서 TodoResponseDto를 반환
     fun updateTodo(@PathVariable todoId: Long, @RequestBody updateTodoRequest: UpdateTodoRequestDto): TodoResponseDto{
         return todoService.updateTodo(todoId, updateTodoRequest)
     }
 
-    @DeleteMapping("/{todoId}") //GET 메소드 핸들링, /todos/todoId에 접근한다
+    @DeleteMapping("/{todoId}") //DELETE 메소드 핸들링, /todos/todoId에 접근한다
     //선택한 할 일을 삭제하는 메소드
     fun deleteTodo(@PathVariable todoId: Long){
         return todoService.deleteTodo(todoId)
