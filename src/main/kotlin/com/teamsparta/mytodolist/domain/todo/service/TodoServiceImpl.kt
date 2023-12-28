@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 
 
 /*
-* Spring의 Web Layer의 일부
+* Spring의 Layer의 일부
 * Service Layer : Web Layer 하위에 존재하는 Layer
 * 트랜잭션(Transaction) 경계의 역할
 * Application Service : 응답(response)을 WebLayer(그중에서도 controller)에 넘겨주는 역할
