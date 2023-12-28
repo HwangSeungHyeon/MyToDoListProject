@@ -9,5 +9,4 @@ data class CommentResponseDto(
     val id: Long, //댓글 번호
     val content: String, //댓글 내용을 나타내는 변수
     val name: String, //작성자 이름을 나타내는 변수
-    val password: String //작성자의 비밀번호를 나타내는 변수
 )
