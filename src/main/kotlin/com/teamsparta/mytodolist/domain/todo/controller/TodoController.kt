@@ -3,6 +3,7 @@ package com.teamsparta.mytodolist.domain.todo.controller
 import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoRequestDto
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoRequestDto
+import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoStatusRequestDto
 import com.teamsparta.mytodolist.domain.todo.service.TodoService
 import org.springframework.web.bind.annotation.*
 
@@ -42,6 +43,13 @@ class TodoController(
     //todoId와 UpdateTodoRequest DTO를 argument로 받아서 TodoResponseDto를 반환
     fun updateTodo(@PathVariable todoId: Long, @RequestBody updateTodoRequest: UpdateTodoRequestDto): TodoResponseDto{
         return todoService.updateTodo(todoId, updateTodoRequest)
+    }
+
+    @PatchMapping("{todoId}") //PATCH 메소드 핸들링, /todos/todoId에 접근한다
+    //선택한 할 일 카드를 완료 상태로 바꾸는 메소드
+    //todoId와 UpdateTodoStatusRequest DTO를 argument로 받아서 TodoResponseDto를 반환
+    fun updateTodoStatus(@PathVariable todoId: Long, updateTodoStatusRequestDto: UpdateTodoStatusRequestDto): TodoResponseDto{
+        return todoService.updateTodoStatus(todoId, updateTodoStatusRequestDto)
     }
 
     @DeleteMapping("/{todoId}") //DELETE 메소드 핸들링, /todos/todoId에 접근한다

@@ -4,6 +4,7 @@ import com.teamsparta.mytodolist.domain.exception.ModelNotFoundException
 import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoRequestDto
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoRequestDto
+import com.teamsparta.mytodolist.domain.todo.dto.UpdateTodoStatusRequestDto
 import com.teamsparta.mytodolist.domain.todo.model.TodoModel
 import com.teamsparta.mytodolist.domain.todo.model.toResponse
 import com.teamsparta.mytodolist.domain.todo.repository.TodoRepository
@@ -51,7 +52,8 @@ class TodoServiceImpl(
                 title = requestDto.title,
                 description = requestDto.description,
                 date = LocalDateTime.now(), //date는 입력받지 않고, 그냥 timezone이 설정된 현재 시간을 넣음
-                name = requestDto.name
+                name = requestDto.name,
+                status = false //status는 입력받지 않고, 그냥 false 값을 넣어줌
             )
         ).toResponse()
     }
@@ -69,6 +71,14 @@ class TodoServiceImpl(
         todo.name = requestDto.name
         todo.title = requestDto.title
         todo.description = requestDto.description
+
+        return todoRepository.save(todo).toResponse()
+    }
+
+    override fun updateTodoStatus(id: Long, requestDto: UpdateTodoStatusRequestDto): TodoResponseDto {
+        val todo = todoRepository.findByIdOrNull(id) ?: throw ModelNotFoundException("Todo", id)
+
+        todo.status = requestDto.status
 
         return todoRepository.save(todo).toResponse()
     }

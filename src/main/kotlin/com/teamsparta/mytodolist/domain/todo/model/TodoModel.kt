@@ -19,7 +19,10 @@ class TodoModel( //데이터베이스에서 데이터를 가져올 때 사용하
     val date: LocalDateTime, //작성 날짜는 수정 불가능
 
     @Column(name = "name") //매핑할 테이블의 컬럼을 정의
-    var name: String //작성자 이름은 수정 가능, null 허용 X
+    var name: String, //작성자 이름은 수정 가능, null 허용 X
+
+    @Column(name = "status")
+    var status: Boolean
 ) {
     @Id //PK 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY) //DB에서 ID를 자동으로 생성
@@ -37,6 +40,7 @@ fun TodoModel.toResponse(): TodoResponseDto{
         title = title,
         description = description,
         date = date,
-        name = name
+        name = name,
+        status = status
     )
 }
