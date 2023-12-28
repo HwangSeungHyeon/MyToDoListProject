@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 /*
 * DTO: 각 Layer 사이의 데이터를 전달하는데 사용
-* 응답(Request)과 요청(Response) 또한 DTO로 표현 가능
+* 요청(Request)과 응답(Response) 또한 DTO로 표현 가능
 * 다른 layer로 데이터를 전달할 때(응답할 때) 사용하는 클래스
 */
 data class CommentResponseDto(
