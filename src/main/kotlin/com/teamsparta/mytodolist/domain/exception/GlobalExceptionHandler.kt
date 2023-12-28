@@ -1,6 +1,8 @@
 package com.teamsparta.mytodolist.domain.exception
 
 import com.teamsparta.mytodolist.domain.exception.dto.ErrorResponseDto
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
@@ -12,8 +14,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 class GlobalExceptionHandler {
     @ExceptionHandler(ModelNotFoundException::class)
     //ModelNotFoundException: 하위 layer에서 id로 검색에 실패했을 때 발생하는 에러
-    //에러가 발생하면 메시지를 DTO에 응답(response)한다.
-    fun handleModelNotFoundException(e: ModelNotFoundException): ErrorResponseDto{
-        return ErrorResponseDto(e.message)
+    //에러가 발생하면 ResponseEntity를 반환한다.
+    fun handleModelNotFoundException(e: ModelNotFoundException): ResponseEntity<ErrorResponseDto>{
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponseDto(e.message))
+    }
+
+    @ExceptionHandler(IllegalStateException::class)
+    fun handleIllegalStateException(e: IllegalStateException): ResponseEntity<ErrorResponseDto>{
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponseDto(e.message))
     }
 }

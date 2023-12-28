@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
-
 /*
 * Spring의 Layer의 일부
 * Service Layer : Web Layer 하위에 존재하는 Layer
@@ -75,11 +74,10 @@ class TodoServiceImpl(
         return todoRepository.save(todo).toResponse()
     }
 
+    @Transactional
     override fun updateTodoStatus(id: Long, requestDto: UpdateTodoStatusRequestDto): TodoResponseDto {
         val todo = todoRepository.findByIdOrNull(id) ?: throw ModelNotFoundException("Todo", id)
-
         todo.status = requestDto.status
-
         return todoRepository.save(todo).toResponse()
     }
 

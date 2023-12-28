@@ -1,5 +1,6 @@
 package com.teamsparta.mytodolist.domain.todo.model
 
+import com.teamsparta.mytodolist.domain.comment.model.CommentModel
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -22,7 +23,10 @@ class TodoModel( //데이터베이스에서 데이터를 가져올 때 사용하
     var name: String, //작성자 이름은 수정 가능, null 허용 X
 
     @Column(name = "status")
-    var status: Boolean
+    var status: Boolean,
+
+    @OneToMany(mappedBy = "todoId", fetch = FetchType.LAZY, cascade=[CascadeType.ALL], orphanRemoval = true)
+    var comments:MutableList<CommentModel> = mutableListOf()
 ) {
     @Id //PK 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY) //DB에서 ID를 자동으로 생성
