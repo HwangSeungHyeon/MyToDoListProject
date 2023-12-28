@@ -54,6 +54,7 @@ class TodoController(
 
     @DeleteMapping("/{todoId}") //DELETE 메소드 핸들링, /todos/todoId에 접근한다
     //선택한 할 일을 삭제하는 메소드
+    //만약 선택된 할 일에 댓글이 적혀있다면 댓글도 전부 삭제
     fun deleteTodo(@PathVariable todoId: Long){
         return todoService.deleteTodo(todoId)
     }

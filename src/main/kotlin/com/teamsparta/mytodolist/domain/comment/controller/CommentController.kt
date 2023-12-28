@@ -4,6 +4,7 @@ import com.teamsparta.mytodolist.domain.comment.dto.AddCommentRequestDto
 import com.teamsparta.mytodolist.domain.comment.dto.CommentResponseDto
 import com.teamsparta.mytodolist.domain.comment.dto.DeleteCommentRequestDto
 import com.teamsparta.mytodolist.domain.comment.dto.UpdateCommentRequestDto
+import com.teamsparta.mytodolist.domain.comment.service.CommentService
 import org.springframework.web.bind.annotation.*
 
 /*
@@ -13,12 +14,14 @@ import org.springframework.web.bind.annotation.*
 */
 @RequestMapping("/todos/{todoId}/comments") // base URI 경로 하위에 해당하는 건 전부 CommentController가 담당하게 됨
 @RestController //CommentController를 Controll layer를 담당하는 Bean으로 등록
-class CommentController {
+class CommentController(
+    private val commentService: CommentService
+) {
     @GetMapping() //GET 메소드 핸들링, /todos/{todoId}/comments에 접근한다
     //선택한 할 일 카드에 작성된 댓글을 모두 가져오는 메소드
     //todoId를 argument로 받아서 CommentResponseDto를 리스트 형태로 반환
     fun getCommentList(@PathVariable todoId: Long): List<CommentResponseDto>{
-        TODO()
+        return commentService.getCommentList(todoId)
     }
 
     @PostMapping()//POST 메소드 핸들링, /todos/{todoId}/comments에 접근한다
@@ -28,7 +31,7 @@ class CommentController {
         @PathVariable todoId: Long,
         @RequestBody addCommentRequestDto: AddCommentRequestDto
     ): CommentResponseDto{
-        TODO()
+        return commentService.addComment(todoId, addCommentRequestDto)
     }
 
     @PutMapping("/{commentId}") //PUT 메소드 핸들링, /todos/{todoId}/comments/{commentId}에 접근한다
@@ -39,7 +42,7 @@ class CommentController {
         @PathVariable commentId: Long,
         @RequestBody updateCommentRequestDto: UpdateCommentRequestDto
     ): CommentResponseDto{
-        TODO()
+        return commentService.updateComment(todoId, commentId, updateCommentRequestDto)
     }
 
     @DeleteMapping("/{commentId}") //DELETE 메소드 핸들링, /todos/{todoId}/comments/{commentId}에 접근한다
@@ -50,6 +53,6 @@ class CommentController {
         @PathVariable commentId: Long,
         @RequestBody deleteCommentRequestDto: DeleteCommentRequestDto
     ): CommentResponseDto{
-        TODO()
+        return commentService.deleteComment(todoId, commentId, deleteCommentRequestDto)
     }
 }
