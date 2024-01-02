@@ -18,8 +18,8 @@ class TodoController(
     //할 일 목록 리스트를 가져오는 메소드
     //TodoResponseDto 리스트를 반환
     //ListSortRequest DTO를 argument로 받아서 TodoResponseDto를 리스트 형태로 반환
-    fun getTodoList(listSortRequestDto: ListSortRequestDto): List<TodoResponseDto> {
-        return todoService.getAllTodoList(listSortRequestDto)
+    fun getTodoList(getAllTodoListRequestWithNameDto: GetAllTodoListRequestWithNameDto): List<TodoResponseDto> {
+        return todoService.getAllTodoList(getAllTodoListRequestWithNameDto)
     }
 
     @GetMapping("/{todoId}") //GET 메소드 핸들링, /todos/{todoId}에 접근한다

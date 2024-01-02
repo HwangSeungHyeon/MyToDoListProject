@@ -12,7 +12,7 @@ interface TodoService {
     //모든 할 일 목록을 가져오는 메소드
     //정렬 요청(Request) DTO에 있는 값을 기준으로 DB에서 값을 가져올 거임
     //Entity로 DB에서 값을 가져와서 응답(Response) DTO 리스트로 바꾸고, Controller로 전달
-    fun getAllTodoList(listSortRequestDto: ListSortRequestDto): List<TodoResponseDto>
+    fun getAllTodoList(getAllTodoListRequestWithNameDto: GetAllTodoListRequestWithNameDto): List<TodoResponseDto>
     
     //id에 해당하는 할 일 카드를 가져오는 메소드
     //Entity로 DB에서 값을 가져와서 응답(Response) DTO로 바꾸고, Controller로 전달
