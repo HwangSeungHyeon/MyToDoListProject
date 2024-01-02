@@ -17,8 +17,9 @@ class TodoController(
     @GetMapping() //GET 메소드 핸들링, /todos에 접근한다
     //할 일 목록 리스트를 가져오는 메소드
     //TodoResponseDto 리스트를 반환
-    fun getTodoList(): List<TodoResponseDto> {
-        return todoService.getAllTodoList()
+    //ListSortRequest DTO를 argument로 받아서 TodoResponseDto를 리스트 형태로 반환
+    fun getTodoList(listSortRequestDto: ListSortRequestDto): List<TodoResponseDto> {
+        return todoService.getAllTodoList(listSortRequestDto)
     }
 
     @GetMapping("/{todoId}") //GET 메소드 핸들링, /todos/{todoId}에 접근한다
@@ -30,8 +31,8 @@ class TodoController(
 
     @PostMapping() //POST 메소드 핸들링, /todos에 접근한다
     //할 일 카드를 만드는 메소드
+    //CreateTodoRequest DTO를 argument로 받아서 TodoResponseDto를 반환
     fun createTodo(@RequestBody createTodoRequest: CreateTodoRequestDto): TodoResponseDto{
-        //CreateTodoRequest DTO를 argument로 받아서 TodoResponseDto를 반환
         return todoService.createTodo(createTodoRequest)
     }
 
