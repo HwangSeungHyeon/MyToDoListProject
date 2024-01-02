@@ -3,13 +3,10 @@ package com.teamsparta.mytodolist.domain.todo.service
 import com.teamsparta.mytodolist.domain.exception.ModelNotFoundException
 import com.teamsparta.mytodolist.domain.todo.dto.*
 import com.teamsparta.mytodolist.domain.todo.model.TodoModel
-import com.teamsparta.mytodolist.domain.todo.model.toResponse
-import com.teamsparta.mytodolist.domain.todo.model.toResponseWithComments
 import com.teamsparta.mytodolist.domain.todo.repository.TodoRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
 
 /*
 * Spring의 Layer의 일부
@@ -27,9 +24,11 @@ class TodoServiceImpl(
     //Entity로 DB에서 값을 가져와서 응답(Response) DTO 리스트로 바꾸고, Controller로 전달
     override fun getAllTodoList(getAllTodoListRequestWithNameDto: GetAllTodoListRequestWithNameDto): List<TodoResponseDto> {
         return if(getAllTodoListRequestWithNameDto.sortByDescend){ //작성일을 기준으로 내림차순일 경우
-            todoRepository.findAllByNameOrderByDateDesc(getAllTodoListRequestWithNameDto.name).map { it.toResponse() }
+//            todoRepository.findAllByNameOrderByDateDesc(getAllTodoListRequestWithNameDto.name).map { it.toResponse() }
+            todoRepository.findAllByNameOrderByDateDesc(getAllTodoListRequestWithNameDto.name).map { TodoModel.toResponse(it) }
         } else{ //작성일을 기준으로 오름차순일 경우
-            todoRepository.findAllByNameOrderByDate(getAllTodoListRequestWithNameDto.name).map { it.toResponse() }
+//            todoRepository.findAllByNameOrderByDate(getAllTodoListRequestWithNameDto.name).map { it.toResponse() }
+            todoRepository.findAllByNameOrderByDate(getAllTodoListRequestWithNameDto.name).map { TodoModel.toResponse(it) }
         }
     }
 
@@ -37,7 +36,7 @@ class TodoServiceImpl(
     //Entity로 DB에서 값을 가져와서 응답(Response) DTO로 바꾸고, Controller로 전달
     override fun getTodoById(id: Long): TodoResponseWithCommentsDto {
         val todo = todoRepository.findByIdOrNull(id) ?: throw ModelNotFoundException("Todo", id)
-        return todo.toResponseWithComments()
+        return TodoModel.toResponseWithComments(todo)
     }
 
     /*
@@ -54,15 +53,7 @@ class TodoServiceImpl(
         //작성한 할 일 본문이 1자 이상, 1000자 이하인지 확인
         if(!textValidation(requestDto.description, 2)) throw IllegalStateException("Description must have between 1 and 1000 words")
 
-        return todoRepository.save(
-            TodoModel(
-                title = requestDto.title,
-                description = requestDto.description,
-                date = LocalDateTime.now(), //date는 입력받지 않고, 그냥 timezone이 설정된 현재 시간을 넣음
-                name = requestDto.name,
-                status = false //status는 입력받지 않고, 그냥 false 값을 넣어줌
-            )
-        ).toResponse()
+        return TodoModel.toResponse(todoRepository.save(TodoModel.create(requestDto)))
     }
 
     /*
@@ -85,14 +76,15 @@ class TodoServiceImpl(
         todo.title = requestDto.title
         todo.description = requestDto.description
 
-        return todoRepository.save(todo).toResponse()
+//        return todoRepository.save(todo).toResponse()
+        return TodoModel.toResponse(todoRepository.save(todo))
     }
 
     @Transactional
     override fun updateTodoStatus(id: Long, requestDto: UpdateTodoStatusRequestDto): TodoResponseDto {
         val todo = todoRepository.findByIdOrNull(id) ?: throw ModelNotFoundException("Todo", id)
         todo.status = requestDto.status
-        return todoRepository.save(todo).toResponse()
+        return TodoModel.toResponse(todoRepository.save(todo))
     }
 
     //id에 해당하는 할 일 카드를 삭제하는 메소드
