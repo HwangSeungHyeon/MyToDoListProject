@@ -5,10 +5,8 @@ import com.teamsparta.mytodolist.domain.comment.dto.CommentResponseDto
 import com.teamsparta.mytodolist.domain.comment.dto.DeleteCommentRequestDto
 import com.teamsparta.mytodolist.domain.comment.dto.UpdateCommentRequestDto
 import com.teamsparta.mytodolist.domain.comment.model.CommentModel
-import com.teamsparta.mytodolist.domain.comment.model.toRespond
 import com.teamsparta.mytodolist.domain.comment.repository.CommentRepository
 import com.teamsparta.mytodolist.domain.exception.ModelNotFoundException
-import com.teamsparta.mytodolist.domain.todo.model.toResponse
 import com.teamsparta.mytodolist.domain.todo.repository.TodoRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -25,7 +23,8 @@ class CommentServiceImpl(
     //Entity로 DB에서 값을 가져와서 응답(Response) DTO 리스트로 바꾸고, Controller로 전달
     override fun getCommentList(todoId: Long): List<CommentResponseDto> {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
-        return todo.comments.map { it.toRespond() }
+//        return todo.comments.map { it.toRespond() }
+        return todo.comments.map { CommentModel.toResponse(it) }
     }
 
     /*
@@ -37,7 +36,7 @@ class CommentServiceImpl(
     @Transactional
     override fun addComment(todoId: Long, addCommentRequestDto: AddCommentRequestDto): CommentResponseDto {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
-        val comment = CommentModel(
+        val comment = CommentModel.create(
             content = addCommentRequestDto.content,
             date = LocalDateTime.now(),
             name = addCommentRequestDto.name,
@@ -47,7 +46,8 @@ class CommentServiceImpl(
         todo.comments.add(comment)
         todoRepository.save(todo)
 
-        return comment.toRespond()
+//        return comment.toRespond()
+        return CommentModel.toResponse(comment)
     }
 
     /*
@@ -66,7 +66,8 @@ class CommentServiceImpl(
         if(comment.name != updateCommentRequestDto.name || comment.password != updateCommentRequestDto.password) throw IllegalStateException("Name or password is incorrect")
 
         comment.content = updateCommentRequestDto.content
-        return commentRepository.save(comment).toRespond()
+//        return commentRepository.save(comment).toRespond()
+        return CommentModel.toResponse(commentRepository.save(comment))
     }
 
     /*
