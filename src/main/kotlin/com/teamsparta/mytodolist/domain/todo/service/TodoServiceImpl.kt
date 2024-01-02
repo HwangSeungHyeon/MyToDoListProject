@@ -25,8 +25,12 @@ class TodoServiceImpl(
 
     //모든 할 일 목록을 가져오는 메소드
     //Entity로 DB에서 값을 가져와서 응답(Response) DTO 리스트로 바꾸고, Controller로 전달
-    override fun getAllTodoList(): List<TodoResponseDto> {
-        return todoRepository.findAllByOrderByDateDesc().map { it.toResponse() }
+    override fun getAllTodoList(listSortRequestDto: ListSortRequestDto): List<TodoResponseDto> {
+        return if(listSortRequestDto.sortByDescend){ //작성일을 기준으로 내림차순일 경우
+            todoRepository.findAllByOrderByDateDesc().map { it.toResponse() }
+        } else{ //작성일을 기준으로 오름차순일 경우
+            todoRepository.findAllByOrderByDate().map { it.toResponse() }
+        }
     }
 
     //id에 해당하는 할 일 카드를 가져오는 메소드

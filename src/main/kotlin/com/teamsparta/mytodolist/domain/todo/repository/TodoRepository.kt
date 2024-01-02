@@ -12,4 +12,6 @@ import org.springframework.stereotype.Repository
 */
 interface TodoRepository: JpaRepository<TodoModel, Long> {
     fun findAllByOrderByDateDesc(): List<TodoModel>
+
+    fun findAllByOrderByDate(): List<TodoModel>
 }
