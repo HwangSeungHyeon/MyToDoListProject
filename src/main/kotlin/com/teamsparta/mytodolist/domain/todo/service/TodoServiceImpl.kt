@@ -25,11 +25,11 @@ class TodoServiceImpl(
 
     //모든 할 일 목록을 가져오는 메소드
     //Entity로 DB에서 값을 가져와서 응답(Response) DTO 리스트로 바꾸고, Controller로 전달
-    override fun getAllTodoList(listSortRequestDto: ListSortRequestDto): List<TodoResponseDto> {
-        return if(listSortRequestDto.sortByDescend){ //작성일을 기준으로 내림차순일 경우
-            todoRepository.findAllByOrderByDateDesc().map { it.toResponse() }
+    override fun getAllTodoList(getAllTodoListRequestWithNameDto: GetAllTodoListRequestWithNameDto): List<TodoResponseDto> {
+        return if(getAllTodoListRequestWithNameDto.sortByDescend){ //작성일을 기준으로 내림차순일 경우
+            todoRepository.findAllByNameOrderByDateDesc(getAllTodoListRequestWithNameDto.name).map { it.toResponse() }
         } else{ //작성일을 기준으로 오름차순일 경우
-            todoRepository.findAllByOrderByDate().map { it.toResponse() }
+            todoRepository.findAllByNameOrderByDate(getAllTodoListRequestWithNameDto.name).map { it.toResponse() }
         }
     }
 
@@ -48,6 +48,12 @@ class TodoServiceImpl(
     */
     @Transactional
     override fun createTodo(requestDto: CreateTodoRequestDto): TodoResponseDto {
+        //작성한 제목이 1자 이상, 200자 이하인지 확인
+        if(!textValidation(requestDto.title, 1)) throw IllegalStateException("Title must have between 1 and 200 words")
+
+        //작성한 할 일 본문이 1자 이상, 1000자 이하인지 확인
+        if(!textValidation(requestDto.description, 2)) throw IllegalStateException("Description must have between 1 and 1000 words")
+
         return todoRepository.save(
             TodoModel(
                 title = requestDto.title,
@@ -67,6 +73,12 @@ class TodoServiceImpl(
     */
     @Transactional
     override fun updateTodo(id: Long, requestDto: UpdateTodoRequestDto): TodoResponseDto {
+        //수정할 제목이 1자 이상, 200자 이하인지 확인
+        if(!textValidation(requestDto.title, 1)) throw IllegalStateException("Title must have between 1 and 200 words")
+
+        //수정할 할 일 본문이 1자 이상, 1000자 이하인지 확인
+        if(!textValidation(requestDto.description, 2)) throw IllegalStateException("Description must have between 1 and 1000 words")
+
         val todo = todoRepository.findByIdOrNull(id) ?: throw ModelNotFoundException("Todo", id)
 
         todo.name = requestDto.name
@@ -89,5 +101,13 @@ class TodoServiceImpl(
     override fun deleteTodo(id: Long){
         val todo = todoRepository.findByIdOrNull(id) ?: throw ModelNotFoundException("Todo", id)
         todoRepository.delete(todo)
+    }
+}
+
+fun TodoService.textValidation(text: String, num: Int): Boolean{
+    return when (num) {
+        1 -> text.length in (1..200) //제목은 1자 이상, 200자 이내
+        2 -> text.length in (1..1000) //본문은 1자 이상, 1000자 이내
+        else -> false
     }
 }
