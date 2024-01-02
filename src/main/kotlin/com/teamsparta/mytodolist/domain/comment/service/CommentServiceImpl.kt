@@ -80,13 +80,12 @@ class CommentServiceImpl(
         todoId: Long,
         commentId: Long,
         deleteCommentRequestDto: DeleteCommentRequestDto
-    ): CommentResponseDto {
+    ){
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
         val comment = commentRepository.findByTodoIdAndId(todoId, commentId) ?: throw ModelNotFoundException("Comment", commentId)
         if(comment.name != deleteCommentRequestDto.name || comment.password != deleteCommentRequestDto.password) throw IllegalStateException("Name or password is incorrect")
 
         todo.comments.remove(comment)
         todoRepository.save(todo)
-        return comment.toRespond()
     }
 }

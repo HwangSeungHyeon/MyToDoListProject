@@ -39,5 +39,5 @@ interface CommentService {
     * 삭제 요청(Request) DTO에 있는 값을 Entity에 담아서 DB로 전달
     * 그 후 응답(Response) DTO를 Controller에 전달
     */
-    fun deleteComment(todoId: Long, commentId: Long, deleteCommentRequestDto: DeleteCommentRequestDto): CommentResponseDto
+    fun deleteComment(todoId: Long, commentId: Long, deleteCommentRequestDto: DeleteCommentRequestDto)
 }
