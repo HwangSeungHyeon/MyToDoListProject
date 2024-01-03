@@ -4,6 +4,7 @@ import com.teamsparta.mytodolist.domain.exception.ModelNotFoundException
 import com.teamsparta.mytodolist.domain.todo.dto.*
 import com.teamsparta.mytodolist.domain.todo.model.TodoModel
 import com.teamsparta.mytodolist.domain.todo.repository.TodoRepository
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -23,14 +24,20 @@ class TodoServiceImpl(
     //모든 할 일 목록을 가져오는 메소드
     //Entity로 DB에서 값을 가져와서 응답(Response) DTO 리스트로 바꾸고, Controller로 전달
     override fun getAllTodoList(
-        getAllTodoListRequestWithNameDto: GetAllTodoListRequestWithNameDto
+        getAllTodoListRequestWithNameDto: GetAllTodoListRequestWithNameDto,
+        page: Int,
+        size: Int
     ): List<TodoResponseWithCommentsDto> {
         return if(getAllTodoListRequestWithNameDto.sortByDescend){ //작성일을 기준으로 내림차순일 경우
 //            todoRepository.findAllByNameOrderByDateDesc(getAllTodoListRequestWithNameDto.name).map { it.toResponse() }
-            todoRepository.findAllByNameOrderByDateDesc(getAllTodoListRequestWithNameDto.name).map { TodoModel.toResponseWithComments(it) }
+            //PageRequest = PageAble의 구현체
+            //PageRequest.of(int page, int size)
+            todoRepository.findAllByNameOrderByDateDesc(getAllTodoListRequestWithNameDto.name, PageRequest.of(page, size)).map { TodoModel.toResponseWithComments(it) }
         } else{ //작성일을 기준으로 오름차순일 경우
 //            todoRepository.findAllByNameOrderByDate(getAllTodoListRequestWithNameDto.name).map { it.toResponse() }
-            todoRepository.findAllByNameOrderByDate(getAllTodoListRequestWithNameDto.name).map { TodoModel.toResponseWithComments(it) }
+            //PageRequest = PageAble의 구현체
+            //PageRequest.of(int page, int size)
+            todoRepository.findAllByNameOrderByDate(getAllTodoListRequestWithNameDto.name, PageRequest.of(page, size)).map { TodoModel.toResponseWithComments(it) }
         }
     }
 

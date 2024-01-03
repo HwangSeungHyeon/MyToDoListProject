@@ -6,8 +6,6 @@ import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseWithCommentsDto
 import jakarta.persistence.*
 import org.hibernate.annotations.BatchSize
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
 import java.time.LocalDateTime
 
 //Domain Model: Domain Service, Entity, VO(Value Object)를 포함하는 개념
@@ -30,7 +28,7 @@ class TodoModel private constructor( //데이터베이스에서 데이터를 가
     @Column(name = "status")
     var status: Boolean,
 
-    @BatchSize(size = 100) //쿼리 batch size를 설정해서 1+n 쿼리 문제를 해결
+    @BatchSize(size = 10) //쿼리 batch size를 설정해서 1+n 쿼리 문제를 해결
     @OneToMany(mappedBy = "todoId", fetch = FetchType.LAZY, cascade=[CascadeType.ALL], orphanRemoval = true)
     var comments:MutableList<CommentModel> = mutableListOf()
 ) {
