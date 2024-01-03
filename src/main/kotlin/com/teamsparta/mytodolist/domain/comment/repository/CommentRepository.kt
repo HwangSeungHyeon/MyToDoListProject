@@ -2,6 +2,8 @@ package com.teamsparta.mytodolist.domain.comment.repository
 
 import com.teamsparta.mytodolist.domain.comment.model.CommentModel
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 
 /*
 * Spring Layer의 일부
