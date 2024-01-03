@@ -1,6 +1,7 @@
 package com.teamsparta.mytodolist.domain.todo.repository
 
 import com.teamsparta.mytodolist.domain.todo.model.TodoModel
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
@@ -14,7 +15,7 @@ import org.springframework.data.repository.query.Param
 interface TodoRepository: JpaRepository<TodoModel, Long> {
 
     //이름이 일치하는 컬럼을 내림차순으로 리스트에 넣음
-    fun findAllByNameOrderByDateDesc(name: String): List<TodoModel>
+    fun findAllByNameOrderByDateDesc(name: String, pageable: Pageable): List<TodoModel>
 
     //n+1 쿼리 문제를 해결하기 위해서 Fetch Join을 사용 (Left Outer Join을 수행함)
     //JPQL을 사용하여 DB에서 데이터를 가져올 때 처음부터 연관된 데이터까지 같이 가져오게 하는 방법
@@ -23,7 +24,7 @@ interface TodoRepository: JpaRepository<TodoModel, Long> {
 //    fun findAllByNameOrderByDateDesc(@Param("name") name: String): List<TodoModel>
 
     //이름이 일치하는 컬럼을 오름차순으로 리스트에 넣음
-    fun findAllByNameOrderByDate(name: String): List<TodoModel>
+    fun findAllByNameOrderByDate(name: String, pageable: Pageable): List<TodoModel>
 
     //n+1 쿼리 문제를 해결하기 위해서 Fetch Join을 사용 (Left Outer Join을 수행함)
     //JPQL을 사용하여 DB에서 데이터를 가져올 때 처음부터 연관된 데이터까지 같이 가져오게 하는 방법

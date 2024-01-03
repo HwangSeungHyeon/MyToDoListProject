@@ -21,11 +21,13 @@ class TodoController(
     //ListSortRequest DTO를 argument로 받아서 Service layer로부터 TodoResponseDto를 리스트 형태로 받음
     //Service layer에서 전달된 DTO를 ResponseEntity로 감싸서 반환함(응답해줌)
     fun getTodoList(
-        getAllTodoListRequestWithNameDto: GetAllTodoListRequestWithNameDto
+        getAllTodoListRequestWithNameDto: GetAllTodoListRequestWithNameDto,
+        page: Int, //확인할 페이지 번호, 0부터 시작
+        size: Int //페이지마다 몇 개씩 잘라서 볼 건지 (예를 들어 전체 개수가 10개일 때 size를 5로 하면 0번 페이지, 1번 페이지가 생긴다.)
     ): ResponseEntity<List<TodoResponseWithCommentsDto>> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(todoService.getAllTodoList(getAllTodoListRequestWithNameDto))
+            .body(todoService.getAllTodoList(getAllTodoListRequestWithNameDto, page, size))
     }
 
     @GetMapping("/{todoId}") //GET 메소드 핸들링, /todos/{todoId}에 접근한다
