@@ -22,7 +22,7 @@ class TodoController(
     //Service layer에서 전달된 DTO를 ResponseEntity로 감싸서 반환함(응답해줌)
     fun getTodoList(
         getAllTodoListRequestWithNameDto: GetAllTodoListRequestWithNameDto
-    ): ResponseEntity<List<TodoResponseDto>> {
+    ): ResponseEntity<List<TodoResponseWithCommentsDto>> {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(todoService.getAllTodoList(getAllTodoListRequestWithNameDto))
@@ -32,7 +32,9 @@ class TodoController(
     //선택한 할 일 카드를 가져오는 메소드
     //todoId를 argument로 받아서 Service layer로부터 TodoResponseWithCommentsDto를 받음
     //Service layer에서 전달된 DTO를 ResponseEntity로 감싸서 반환함(응답해줌)
-    fun getTodo(@PathVariable todoId: Long): ResponseEntity<TodoResponseWithCommentsDto> {
+    fun getTodo(
+        @PathVariable todoId: Long
+    ): ResponseEntity<TodoResponseWithCommentsDto> {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(todoService.getTodoById(todoId))
