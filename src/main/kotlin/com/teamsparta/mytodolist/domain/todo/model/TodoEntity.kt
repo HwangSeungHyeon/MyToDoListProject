@@ -1,18 +1,17 @@
 package com.teamsparta.mytodolist.domain.todo.model
 
-import com.teamsparta.mytodolist.domain.comment.model.CommentModel
+import com.teamsparta.mytodolist.domain.comment.model.CommentEntity
 import com.teamsparta.mytodolist.domain.todo.dto.CreateTodoRequestDto
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseDto
 import com.teamsparta.mytodolist.domain.todo.dto.TodoResponseWithCommentsDto
 import jakarta.persistence.*
-import org.hibernate.annotations.BatchSize
 import java.time.LocalDateTime
 
 //Domain Model: Domain Service, Entity, VO(Value Object)를 포함하는 개념
 
 @Entity //Entity annotation, 객체(class)를 entity로 사용하기 위해서 사용
 @Table(name="todo") //매핑할 테이블 이름을 정의
-class TodoModel private constructor( //데이터베이스에서 데이터를 가져올 때 사용하는 클래스
+class TodoEntity private constructor( //데이터베이스에서 데이터를 가져올 때 사용하는 클래스
     @Column(name = "title") //매핑할 테이블의 컬럼을 정의
     var title: String, //제목은 수정 가능, null 허용 X
 
@@ -30,7 +29,7 @@ class TodoModel private constructor( //데이터베이스에서 데이터를 가
 
 //    @BatchSize(size = 10) //쿼리 batch size를 설정해서 1+n 쿼리 문제를 해결
     @OneToMany(mappedBy = "todoId", fetch = FetchType.LAZY, cascade=[CascadeType.ALL], orphanRemoval = true)
-    var comments:MutableList<CommentModel> = mutableListOf()
+    var comments:MutableList<CommentEntity> = mutableListOf()
 ) {
     @Id //PK 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY) //DB에서 ID를 자동으로 생성
@@ -39,8 +38,8 @@ class TodoModel private constructor( //데이터베이스에서 데이터를 가
     companion object{ // companion object를 활용한 객체 생성
         fun create(
             requestDto: CreateTodoRequestDto
-        ): TodoModel{
-            return TodoModel(
+        ): TodoEntity{
+            return TodoEntity(
                 title = requestDto.title,
                 description = requestDto.description,
                 date = LocalDateTime.now(), //date는 입력받지 않고, 그냥 timezone이 설정된 현재 시간을 넣음
@@ -55,28 +54,28 @@ class TodoModel private constructor( //데이터베이스에서 데이터를 가
         * 응답(Request)과 요청(Response) 또한 DTO로 표현 가능
         */
         fun toResponse(
-            todoModel: TodoModel
+            todoEntity: TodoEntity
         ): TodoResponseDto{
             return TodoResponseDto(
-                id = todoModel.id!!,
-                title = todoModel.title,
-                description = todoModel.description,
-                date = todoModel.date,
-                name = todoModel.name,
-                status = todoModel.status)
+                id = todoEntity.id!!,
+                title = todoEntity.title,
+                description = todoEntity.description,
+                date = todoEntity.date,
+                name = todoEntity.name,
+                status = todoEntity.status)
         }
 
         fun toResponseWithComments( // companion object를 활용한 객체 변환
-            todoModel: TodoModel
+            todoEntity: TodoEntity
         ): TodoResponseWithCommentsDto{
             return TodoResponseWithCommentsDto(
-                id = todoModel.id!!,
-                title = todoModel.title,
-                description = todoModel.description,
-                date = todoModel.date,
-                name = todoModel.name,
-                status = todoModel.status,
-                comments = todoModel.comments)
+                id = todoEntity.id!!,
+                title = todoEntity.title,
+                description = todoEntity.description,
+                date = todoEntity.date,
+                name = todoEntity.name,
+                status = todoEntity.status,
+                comments = todoEntity.comments)
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.teamsparta.mytodolist.domain.todo.service
 
 import com.teamsparta.mytodolist.domain.todo.dto.*
-import org.springframework.data.domain.Pageable
 
 /*
 * Spring의 Layer의 일부

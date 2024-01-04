@@ -1,6 +1,6 @@
 package com.teamsparta.mytodolist.domain.todo.dto
 
-import com.teamsparta.mytodolist.domain.comment.model.CommentModel
+import com.teamsparta.mytodolist.domain.comment.model.CommentEntity
 import java.time.LocalDateTime
 
 data class TodoResponseWithCommentsDto (
@@ -10,5 +10,5 @@ data class TodoResponseWithCommentsDto (
     val date: LocalDateTime, //작성일을 나타내는 변수
     val name: String, //작성자 이름을 나타내는 변수
     val status: Boolean,
-    val comments: MutableList<CommentModel>
+    val comments: MutableList<CommentEntity>
 )

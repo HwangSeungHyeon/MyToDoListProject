@@ -4,7 +4,7 @@ import com.teamsparta.mytodolist.domain.comment.dto.AddCommentRequestDto
 import com.teamsparta.mytodolist.domain.comment.dto.CommentResponseDto
 import com.teamsparta.mytodolist.domain.comment.dto.DeleteCommentRequestDto
 import com.teamsparta.mytodolist.domain.comment.dto.UpdateCommentRequestDto
-import com.teamsparta.mytodolist.domain.comment.model.CommentModel
+import com.teamsparta.mytodolist.domain.comment.model.CommentEntity
 import com.teamsparta.mytodolist.domain.comment.repository.CommentRepository
 import com.teamsparta.mytodolist.domain.exception.ModelNotFoundException
 import com.teamsparta.mytodolist.domain.todo.repository.TodoRepository
@@ -24,7 +24,7 @@ class CommentServiceImpl(
     override fun getCommentList(todoId: Long): List<CommentResponseDto> {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
 //        return todo.comments.map { it.toRespond() }
-        return todo.comments.map { CommentModel.toResponse(it) }
+        return todo.comments.map { CommentEntity.toResponse(it) }
     }
 
     /*
@@ -36,7 +36,7 @@ class CommentServiceImpl(
     @Transactional
     override fun addComment(todoId: Long, addCommentRequestDto: AddCommentRequestDto): CommentResponseDto {
         val todo = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
-        val comment = CommentModel.create(
+        val comment = CommentEntity.create(
             content = addCommentRequestDto.content,
             date = LocalDateTime.now(),
             name = addCommentRequestDto.name,
@@ -47,7 +47,7 @@ class CommentServiceImpl(
         todoRepository.save(todo)
 
 //        return comment.toRespond()
-        return CommentModel.toResponse(comment)
+        return CommentEntity.toResponse(comment)
     }
 
     /*
@@ -67,7 +67,7 @@ class CommentServiceImpl(
 
         comment.content = updateCommentRequestDto.content
 //        return commentRepository.save(comment).toRespond()
-        return CommentModel.toResponse(commentRepository.save(comment))
+        return CommentEntity.toResponse(commentRepository.save(comment))
     }
 
     /*

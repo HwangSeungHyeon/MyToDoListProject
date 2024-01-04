@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 
 @Entity //Entity annotation, 객체(class)를 entity로 사용하기 위해서 사용
 @Table(name = "comment") //매핑할 테이블 이름을 정의
-class CommentModel private constructor(
+class CommentEntity private constructor(
     @Column(name = "content") //매핑할 테이블의 컬럼을 정의
     var content: String, //댓글 내용은 수정 가능, null 허용 X
 
@@ -37,18 +37,18 @@ class CommentModel private constructor(
             name: String,
             password: String,
             todoId: Long
-        ): CommentModel{
-            return CommentModel(content, date, name, password, todoId)
+        ): CommentEntity{
+            return CommentEntity(content, date, name, password, todoId)
         }
 
         fun toResponse(
-            commentModel: CommentModel
+            commentEntity: CommentEntity
         ): CommentResponseDto{
             return CommentResponseDto(
-                id = commentModel.id!!,
-                content = commentModel.content,
-                name = commentModel.name,
-                date = commentModel.date
+                id = commentEntity.id!!,
+                content = commentEntity.content,
+                name = commentEntity.name,
+                date = commentEntity.date
             )
         }
     }

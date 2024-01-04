@@ -2,7 +2,7 @@ package com.teamsparta.mytodolist.domain.todo.service
 
 import com.teamsparta.mytodolist.domain.exception.ModelNotFoundException
 import com.teamsparta.mytodolist.domain.todo.dto.*
-import com.teamsparta.mytodolist.domain.todo.model.TodoModel
+import com.teamsparta.mytodolist.domain.todo.model.TodoEntity
 import com.teamsparta.mytodolist.domain.todo.repository.TodoRepository
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
@@ -31,14 +31,14 @@ class TodoServiceImpl(
     ): List<TodoResponseWithCommentsDto> {
         //sortByDescend가 true일 경우 내림차순, 아닐 경우 오름차순
         val sort = if(getAllTodoListRequestWithNameDto.sortByDescend) Sort.by("date").descending() else Sort.by("date")
-        return todoRepository.findAllByName(getAllTodoListRequestWithNameDto.name, PageRequest.of(page, size, sort)).map { TodoModel.toResponseWithComments(it) }
+        return todoRepository.findAllByName(getAllTodoListRequestWithNameDto.name, PageRequest.of(page, size, sort)).map { TodoEntity.toResponseWithComments(it) }
     }
 
     //id에 해당하는 할 일 카드를 가져오는 메소드
     //Entity로 DB에서 값을 가져와서 응답(Response) DTO로 바꾸고, Controller로 전달
     override fun getTodoById(id: Long): TodoResponseWithCommentsDto {
         val todo = todoRepository.findByIdOrNull(id) ?: throw ModelNotFoundException("Todo", id)
-        return TodoModel.toResponseWithComments(todo)
+        return TodoEntity.toResponseWithComments(todo)
     }
 
     /*
@@ -55,7 +55,7 @@ class TodoServiceImpl(
         //작성한 할 일 본문이 1자 이상, 1000자 이하인지 확인
         if(!textValidation(requestDto.description, 2)) throw IllegalStateException("Description must have between 1 and 1000 words")
 
-        return TodoModel.toResponse(todoRepository.save(TodoModel.create(requestDto)))
+        return TodoEntity.toResponse(todoRepository.save(TodoEntity.create(requestDto)))
     }
 
     /*
@@ -79,14 +79,14 @@ class TodoServiceImpl(
         todo.description = requestDto.description
 
 //        return todoRepository.save(todo).toResponse()
-        return TodoModel.toResponse(todoRepository.save(todo))
+        return TodoEntity.toResponse(todoRepository.save(todo))
     }
 
     @Transactional
     override fun updateTodoStatus(id: Long, requestDto: UpdateTodoStatusRequestDto): TodoResponseDto {
         val todo = todoRepository.findByIdOrNull(id) ?: throw ModelNotFoundException("Todo", id)
         todo.status = requestDto.status
-        return TodoModel.toResponse(todoRepository.save(todo))
+        return TodoEntity.toResponse(todoRepository.save(todo))
     }
 
     //id에 해당하는 할 일 카드를 삭제하는 메소드

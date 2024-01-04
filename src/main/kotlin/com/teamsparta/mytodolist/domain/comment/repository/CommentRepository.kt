@@ -1,9 +1,7 @@
 package com.teamsparta.mytodolist.domain.comment.repository
 
-import com.teamsparta.mytodolist.domain.comment.model.CommentModel
+import com.teamsparta.mytodolist.domain.comment.model.CommentEntity
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
-import org.springframework.data.repository.query.Param
 
 /*
 * Spring Layer의 일부
@@ -11,6 +9,6 @@ import org.springframework.data.repository.query.Param
 * 데이터베이스와 통신하는 역할 담당 (값 수정, 값 추가, 삭제, 값 가져오기 등)
 * Java 및 kotlin 객체를 사용해서 DB에 대해 CRUD를 쉽게 할 수 있도록 하는 JPA를 사용해서 DB와 통신
 */
-interface CommentRepository: JpaRepository<CommentModel, Long> {
-    fun findByTodoIdAndId(todoId: Long, commentId: Long): CommentModel?
+interface CommentRepository: JpaRepository<CommentEntity, Long> {
+    fun findByTodoIdAndId(todoId: Long, commentId: Long): CommentEntity?
 }
