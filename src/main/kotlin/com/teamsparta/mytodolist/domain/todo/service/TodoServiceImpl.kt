@@ -29,21 +29,13 @@ class TodoServiceImpl(
         page: Int,
         size: Int
     ): List<TodoResponseWithCommentsDto> {
-        return if(getAllTodoListRequestWithNameDto.sortByDescend){ //작성일을 기준으로 내림차순일 경우
-//            todoRepository.findAllByNameOrderByDateDesc(getAllTodoListRequestWithNameDto.name).map { it.toResponse() }
-            //PageRequest = PageAble의 구현체
-            //PageRequest.of(int page, int size)
-//            todoRepository.findAllByNameOrderByDateDesc(getAllTodoListRequestWithNameDto.name, PageRequest.of(page, size)).map { TodoModel.toResponseWithComments(it) }
-
-            todoRepository.findAllByNameOrderByDateDesc(getAllTodoListRequestWithNameDto.name, PageRequest.of(page, size, Sort.by("date").descending())).map { TodoModel.toResponseWithComments(it) }
+        val sort: Sort
+        if(getAllTodoListRequestWithNameDto.sortByDescend){ //작성일을 기준으로 내림차순일 경우
+            sort = Sort.by("date").descending()
         } else{ //작성일을 기준으로 오름차순일 경우
-//            todoRepository.findAllByNameOrderByDate(getAllTodoListRequestWithNameDto.name).map { it.toResponse() }
-            //PageRequest = PageAble의 구현체
-            //PageRequest.of(int page, int size)
-//            todoRepository.findAllByNameOrderByDate(getAllTodoListRequestWithNameDto.name, PageRequest.of(page, size)).map { TodoModel.toResponseWithComments(it) }
-
-            todoRepository.findAllByNameOrderByDate(getAllTodoListRequestWithNameDto.name, PageRequest.of(page, size, Sort.by("date"))).map { TodoModel.toResponseWithComments(it) }
+            sort = Sort.by("date")
         }
+        return todoRepository.findAllByName(getAllTodoListRequestWithNameDto.name, PageRequest.of(page, size, sort)).map { TodoModel.toResponseWithComments(it) }
     }
 
     //id에 해당하는 할 일 카드를 가져오는 메소드

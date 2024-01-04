@@ -22,8 +22,6 @@ interface TodoRepository: JpaRepository<TodoModel, Long> {
     //pagination을 못함
 //    @Query("select t from TodoModel t left join fetch t.comments where t.name = :name order by t.date desc")
 //    fun findAllByNameOrderByDateDesc(@Param("name") name: String, pageable: Pageable): List<TodoModel>
-    @Query("select t from TodoModel t left join fetch t.comments where t.name = :name")
-    fun findAllByNameOrderByDateDesc(@Param("name") name: String, pageable: Pageable): List<TodoModel>
 
     //이름이 일치하는 컬럼을 오름차순으로 리스트에 넣음
 //    fun findAllByNameOrderByDate(name: String, pageable: Pageable): List<TodoModel>
@@ -33,7 +31,9 @@ interface TodoRepository: JpaRepository<TodoModel, Long> {
     //pagination을 못함
 //    @Query("select t from TodoModel t left join fetch t.comments where t.name = :name order by t.date")
 //    fun findAllByNameOrderByDate(@Param("name") name: String, pageable: Pageable): List<TodoModel>
-
+    
+    
+    //정렬을 pageable에서 담당해주니까 코드를 하나로 줄일 수 있음
     @Query("select t from TodoModel t left join fetch t.comments where t.name = :name")
-    fun findAllByNameOrderByDate(@Param("name") name: String, pageable: Pageable): List<TodoModel>
+    fun findAllByName(@Param("name") name: String, pageable: Pageable): List<TodoModel>
 }
