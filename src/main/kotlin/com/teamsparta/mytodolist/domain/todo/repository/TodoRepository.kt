@@ -31,8 +31,9 @@ interface TodoRepository: JpaRepository<TodoModel, Long> {
     //pagination을 못함
 //    @Query("select t from TodoModel t left join fetch t.comments where t.name = :name order by t.date")
 //    fun findAllByNameOrderByDate(@Param("name") name: String, pageable: Pageable): List<TodoModel>
-    
-    
+
+
+    //n+1 쿼리 문제를 해결하기 위해서 Fetch Join을 사용 (Left Outer Join을 수행함)
     //정렬을 pageable에서 담당해주니까 코드를 하나로 줄일 수 있음
     @Query("select t from TodoModel t left join fetch t.comments where t.name = :name")
     fun findAllByName(@Param("name") name: String, pageable: Pageable): List<TodoModel>
