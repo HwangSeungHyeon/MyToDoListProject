@@ -5,6 +5,10 @@ spring:
         show_sql: true
         format_sql: true
         highlight_sql: true
+  security:
+    user:
+      password: 1
+
 logging:
   level:
     org:

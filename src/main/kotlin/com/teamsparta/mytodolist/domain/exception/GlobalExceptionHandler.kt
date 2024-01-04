@@ -23,4 +23,9 @@ class GlobalExceptionHandler {
     fun handleIllegalStateException(e: IllegalStateException): ResponseEntity<ErrorResponseDto>{
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponseDto(e.message))
     }
+
+    @ExceptionHandler(LoginFailedException::class)
+    fun handleLoginFailedException(e: LoginFailedException): ResponseEntity<ErrorResponseDto>{
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponseDto(e.message))
+    }
 }

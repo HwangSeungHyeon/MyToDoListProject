@@ -31,6 +31,9 @@ class TodoServiceImpl(
     ): List<TodoResponseWithCommentsDto> {
         //sortByDescend가 true일 경우 내림차순, 아닐 경우 오름차순
         val sort = if(getAllTodoListRequestWithNameDto.sortByDescend) Sort.by("date").descending() else Sort.by("date")
+
+        //PageRequest = PageAble의 구현체
+        //PageRequest.of(int page, int size)
         return todoRepository.findAllByName(getAllTodoListRequestWithNameDto.name, PageRequest.of(page, size, sort)).map { TodoEntity.toResponseWithComments(it) }
     }
 
